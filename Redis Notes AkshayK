@@ -1,0 +1,247 @@
+127.0.0.1:6379> ping // To test the connection
+PONG
+127.0.0.1:6379> ping akshay // To get back what is passed
+"akshay"
+127.0.0.1:6379> echo 'Hello World' // To print anything on cli
+"Hello World"
+127.0.0.1:6379> set name akshay // setting key value pair.
+OK
+127.0.0.1:6379> get name // Getting the value from key.
+"akshay"
+127.0.0.1:6379> set bar 100 // setting key value pair.
+OK
+127.0.0.1:6379> get bar // Getting the value from key.
+"100"
+127.0.0.1:6379> incr bar // Increment 
+(integer) 101
+127.0.0.1:6379> get bar // Getting the current value
+"101"
+127.0.0.1:6379> decr bar // Decrement
+(integer) 100
+127.0.0.1:6379> get bar // Getting the current value
+"100"
+127.0.0.1:6379> exists name // To check whether key value exists or not 1 for true and 0 for false
+(integer) 1
+127.0.0.1:6379> exists name1 // To check whether key value exists or not 1 for true and 0 for false
+(integer) 0
+127.0.0.1:6379> del bar // Deleting the key 
+(integer) 1
+127.0.0.1:6379> exists bar // checking whether it is deleted or not
+(integer) 0
+127.0.0.1:6379> get bar // Getting
+(nil)
+127.0.0.1:6379> flushall // flushing all the set and get values of the current cli session
+OK
+127.0.0.1:6379> get name // Getting
+(nil)
+127.0.0.1:6379> set server:name someserver // Setting the key value pair for name server:name and its name
+OK
+127.0.0.1:6379> get server:name // Getting
+"someserver"
+127.0.0.1:6379> set server:port 8000 // Setting the key value pair for name server:port and its port number
+OK
+127.0.0.1:6379> get server:name // Getting
+"someserver"
+127.0.0.1:6379> get server:port // Getting
+"8000"
+127.0.0.1:6379> set Greetings "Hello Akshay"
+OK
+127.0.0.1:6379> get Greetings
+"Hello Akshay"
+127.0.0.1:6379> expire Greetings 50 // Setting the expire timing.
+(integer) 1
+127.0.0.1:6379> ttl Greetings // time to leave 
+(integer) 39
+127.0.0.1:6379> ttl Greetings
+(integer) 35
+127.0.0.1:6379> ttl Greetings
+(integer) 34
+127.0.0.1:6379> ttl Greetings
+(integer) 33
+127.0.0.1:6379> get Greetings // After time expires
+(nil)
+127.0.0.1:6379> setex greeting 30 "Hello Akshay" // To set the key value pair and expire time.
+OK
+127.0.0.1:6379> ttl greeting
+(integer) 22
+127.0.0.1:6379> ttl greeting // Negative counter that is expired time counter
+(integer) -2
+127.0.0.1:6379> get greeting // Getting null value
+(nil)
+127.0.0.1:6379> setex greeting 130 "Hello Akshay" // Again setting with 130 sec
+OK
+127.0.0.1:6379> ttl greeting // time to leave
+(integer) 115
+127.0.0.1:6379> persist greeting // to persist the greeting i.e stopping from expiring
+(integer) 1
+127.0.0.1:6379> ttl greeting // time to leave
+(integer) -1 
+127.0.0.1:6379> get greeting // it doesnt expire
+"Hello Akshay"
+127.0.0.1:6379> mset key1 "Hello" key2 "World" // To set multiple key value pairs
+OK
+127.0.0.1:6379> get key1 // Getting
+"Hello"
+127.0.0.1:6379> get key2 // Getting
+"World"
+127.0.0.1:6379> append key1 " world" // appending value for key1
+(integer) 11
+127.0.0.1:6379> get key1 // Getting
+"Hello world"
+127.0.0.1:6379> rename key1 greet
+OK
+127.0.0.1:6379> get greet
+"Hello world"
+127.0.0.1:6379> get key1
+(nil)
+
+************Lists*******************
+
+127.0.0.1:6379> lpush people "akshay" // Pushing items to left of lists
+(integer) 1
+127.0.0.1:6379> lpush people "aditya"
+(integer) 2
+127.0.0.1:6379> lpush people "adi"
+(integer) 3
+127.0.0.1:6379> lrange people 0 -1 // Displaying all the list content
+1) "adi"
+2) "aditya"
+3) "akshay"
+127.0.0.1:6379> lrange people 1 2 // Displaying selected range
+1) "aditya"
+2) "akshay"
+127.0.0.1:6379> rpush people harry // Pushing items to right of lists
+(integer) 4
+127.0.0.1:6379> lrange people 0 -1 // // Displaying the list
+1) "adi"
+2) "aditya"
+3) "akshay"
+4) "harry"
+127.0.0.1:6379> llen people // Getting the length of list
+(integer) 4
+127.0.0.1:6379> lpop people // Popping the list item from left side
+"adi"
+127.0.0.1:6379> lrange people 0 -1
+1) "aditya"
+2) "akshay"
+3) "harry"
+127.0.0.1:6379> rpop people // Popping the list item from right side
+"harry"
+127.0.0.1:6379> lrange people 0 -1
+1) "aditya"
+2) "akshay"
+127.0.0.1:6379> linsert people before "akshay" "aditya" // Inserting the item at specific location
+(integer) 3
+127.0.0.1:6379> lrange people 0 -1
+1) "aditya"
+2) "aditya"
+3) "akshay"
+127.0.0.1:6379> lpop people
+"aditya"
+127.0.0.1:6379> linsert people before "akshay" "adish"
+(integer) 3
+127.0.0.1:6379> lrange people 0 -1
+1) "aditya"
+2) "adish"
+3) "akshay"
+
+**************Sets***************
+
+127.0.0.1:6379> sadd cars "Ford" // Adding the item to the set.
+(integer) 1
+127.0.0.1:6379> sadd cars "Honda"
+(integer) 1
+127.0.0.1:6379> sadd cars "BMW"
+(integer) 1
+127.0.0.1:6379> sismember cars "Ford" // Checking whether the given value is part of set.
+(integer) 1
+127.0.0.1:6379> sismember cars "Chevy"
+(integer) 0 
+127.0.0.1:6379> smembers cars // Getting all the set members
+1) "Honda"
+2) "BMW"
+3) "Ford"
+127.0.0.1:6379> scard cars // Getting the count of sets (cardinality)
+(integer) 3
+127.0.0.1:6379> smove cars mycars "Ford" // Moving an item from one set to another set
+(integer) 1
+127.0.0.1:6379> smembers cars // Getting sets
+1) "Honda"
+2) "BMW"
+127.0.0.1:6379> smembers mycars // Checking in the set
+1) "Ford"
+127.0.0.1:6379> srem cars BMW // Removing the value from set
+(integer) 1
+127.0.0.1:6379> smembers cars
+1) "Honda"
+
+***************Sorted Sets****************
+
+127.0.0.1:6379> zadd users 1994 "Akshay Kashid" // Adding the birth year as a score to sort elements
+(integer) 1
+127.0.0.1:6379> zadd users 1992 "Priya Kashid"
+(integer) 1
+127.0.0.1:6379> zadd users 1995 "Adish Saitwadkar"
+(integer) 1
+127.0.0.1:6379> zadd users 1995 "Aditya Potdar"
+(integer) 1
+127.0.0.1:6379> zrank users "Akshay Kashid" // Getting the rank of value based on score (1992, 1994, 1995, 1995)
+(integer) 1
+127.0.0.1:6379> zrank users "Aditya Potdar"
+(integer) 3
+127.0.0.1:6379> zrank users "Priya Kashid" 
+(integer) 0
+127.0.0.1:6379> zrange users 0 -1 // Getting all sorted sets members
+1) "Priya Kashid"
+2) "Akshay Kashid"
+3) "Adish Saitwadkar"
+4) "Aditya Potdar"
+127.0.0.1:6379> zincrby users 1 "Aditya Potdar" // Incrementing the score by specified value
+"1996"
+127.0.0.1:6379> zincrby users 5 "Aditya Potdar"
+"2001"
+
+***************Hashes*********************
+
+127.0.0.1:6379> hset user:akshay name "Akshay Kashid" // setting new hash element with key value pair.
+(integer) 1
+127.0.0.1:6379> hset user:akshay email "akshaykashid40@gmail.com"
+(integer) 1
+127.0.0.1:6379> hget user:akshay name // Getting info of user akshay with name
+"Akshay Kashid"
+127.0.0.1:6379> hget user:akshay email // Getting info of user akshay with email
+"akshaykashid40@gmail.com"
+127.0.0.1:6379> hgetall user:akshay // Getting all info of user akshay
+1) "name"
+2) "Akshay Kashid"
+3) "email"
+4) "akshaykashid40@gmail.com"
+127.0.0.1:6379> hmset user:john name "john doe" email "john.doe@gmail.com" age 25
+OK
+127.0.0.1:6379> hgetall user:john
+1) "name"
+2) "john doe"
+3) "email"
+4) "john.doe@gmail.com"
+5) "age"
+6) "25"
+127.0.0.1:6379> hkeys user:akshay // Getting only keys
+1) "name"
+2) "email"
+127.0.0.1:6379> hvals user:john // Getting only values
+1) "john doe"
+2) "john.doe@gmail.com"
+3) "25"
+127.0.0.1:6379> hincrby user:john age 1 // Incrementing user johns age by desired number
+(integer) 26
+127.0.0.1:6379> hdel user:john age // Deleting the key age
+(integer) 1
+127.0.0.1:6379> hgetall user:john
+1) "name"
+2) "john doe"
+3) "email"
+4) "john.doe@gmail.com"
+127.0.0.1:6379> hlen user:john // Getting len of keys in user john.
+(integer) 2
+
+
