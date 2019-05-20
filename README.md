@@ -1,2 +1,2 @@
 # Redis-Notes
-Notes On redis's different datatypes and it associated methods. 
+Step by Step Notes on different Data Types of Redis including String, Lists, Sets, Sorted Lists, Hashes.
