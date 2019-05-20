@@ -1,5 +1,8 @@
 127.0.0.1:6379> ping // To test the connection
 PONG
+
+***************String*******************
+
 127.0.0.1:6379> ping akshay // To get back what is passed
 "akshay"
 127.0.0.1:6379> echo 'Hello World' // To print anything on cli
